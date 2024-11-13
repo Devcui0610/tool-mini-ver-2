@@ -1,3 +1,5 @@
+@use "../utils";
+
 .filter {
     &__list {
         padding: 10px;
@@ -143,6 +145,10 @@
         resize: none;
         margin-top: 15px;
 
+        @include utils.screen(md) {
+            font-size: 1.6rem;
+        }
+
         &:focus {
             border-color: var(--border-filter);
             background-color: #ffffff;
@@ -164,6 +170,7 @@
     border-radius: 10px;
     display: inline-block;
     margin-bottom: 20px;
+    margin-top: 10px;
     overflow: hidden;
 
     &__row {
@@ -175,6 +182,7 @@
     &__list {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     &__item {

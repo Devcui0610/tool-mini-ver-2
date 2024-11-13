@@ -107,12 +107,6 @@
                                 </button>
                             </div>
                             <div class="filter-show__item">
-                                <button id="filter-btn" class="filter-show__row">
-                                    <img src="./assets/images/filter.svg" class="icon" alt="" />
-                                    <span class="filter-show__text">Auto Filter</span>
-                                </button>
-                            </div>
-                            <div class="filter-show__item">
                                 <input
                                     type="number"
                                     id="columnLimit"
@@ -124,7 +118,7 @@
                             <div class="filter-show__item">
                                 <button id="openModal-report" class="filter-show__row">
                                     <img src="./assets/images/add.svg" class="icon" alt="" />
-                                    <span class="filter-show__text">Add Text Output</span>
+                                    <span class="filter-show__text">Text Output</span>
                                 </button>
                             </div>
 
@@ -156,6 +150,10 @@
                         </div>
                     </div>
 
+                    <div class="dashboard">
+                        <!-- Nhận dữ liệu Dashboard -->
+                    </div>
+
                     <!-- Khu vực chọn tab theo ngày -->
                     <div class="tab-page">
                         <button id="prevDate" class="tab-page__item">Prev</button>
@@ -163,11 +161,11 @@
                         <button id="nextDate" class="tab-page__item">Next</button>
                     </div>
                     <!-- Nơi hiển thị Table Result -->
-                    <div class="row gx-3">
-                        <div class="col-8">
+                    <div class="row gx-3 gy-md-2">
+                        <div class="col-8 col-md-12">
                             <div id="data-container" class="dataTable"></div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4 col-md-12">
                             <div class="text-report">
                                 <!-- Nhận dữ liệu Report -->
                             </div>

@@ -1,9 +1,15 @@
+@use "../utils";
+
 .sidebar {
     height: auto;
     width: 240px;
     transition: width 0.25s;
     background: var(--bg-sidebar);
     border-right: 1px solid var(--separator);
+
+    @include utils.screen(md) {
+        display: none;
+    }
 
     &.hidden {
         width: 0;

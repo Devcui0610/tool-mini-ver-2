@@ -199,6 +199,7 @@ async function fetchSheetData(apiKey, sheetId, rangeApi) {
             updateDataBasedOnDay(arrayTable);
             displayData(arrayTable); // Hiển thị nội dung bảng
             displayReport(arrayTable); // Hiển thị nôi dung Report
+            displayDashboard(arrayTable); // Hiển thị nôi dung Report
         }
 
         // Hiển thị thông báo trong 2 giây
@@ -289,6 +290,7 @@ function initializeData() {
         filteredData = JSON.parse(savedFilteredData);
         displayData(filteredData);
         displayReport(filteredData);
+        displayDashboard(filteredData);
     } else {
         updateDataBasedOnDay();
     }
@@ -300,6 +302,7 @@ function initializeData() {
         arrayTable = storedData;
         displayData(arrayTable); // Hiển thị toàn bộ dữ liệu
         displayReport(arrayTable);
+        displayDashboard(arrayTable);
     } else {
         // Nếu không có dữ liệu trong localStorage, gọi API để lấy dữ liệu
         const apiKey = getFromLocalStorage('apiKey');
@@ -523,6 +526,7 @@ function updateDataBasedOnDay() {
     const filteredData = filterSheetDataCustom(arrayTable, oneDay);
     displayData(filteredData); // Hiển thị dữ liệu đã lọc
     displayReport(filteredData); // Hiển thị dữ liệu đã lọc
+    displayDashboard(filteredData); // Hiển thị dữ liệu đã lọc
 
     saveToLocalStorage('oneDay', oneDay); // Lưu ngày
     saveToLocalStorage('filteredData', filteredData); // Lưu dữ liệu đã lọc
@@ -572,6 +576,68 @@ function displayReport(data) {
 
     // Gọi hàm để cập nhật các sự kiện cho nút Back và Copy
     updateEventListeners(filteredData);
+}
+
+/**
+ * =====================================
+ * displayDashboard()
+ * =====================================
+ * Mô tả:
+ * - Hiển thị tổng quan Report
+ */
+// Hàm hiển thị thông tin textReport
+function displayDashboard(data) {
+    const dashboard = document.querySelector('.dashboard');
+
+    // Xoá tất cả các mục hiện có trong dashboard
+    dashboard.innerHTML = "";
+
+    // Biến tổng hợp các kết quả
+    let totalRows = data.length - 1;
+    let name1Rows = 0;
+    let name2Rows = 0;
+    let nhaDaiRows = 0;
+    let blvRows = 0;
+    let blogSeo = 0;
+
+    // Lọc dữ liệu nội bộ
+    data.forEach((row) => {
+        if (row[7] && row[7].toLowerCase().includes("night")) {
+            name1Rows++;
+        }
+
+        if (row[7] && row[7].toLowerCase().includes("goku")) {
+            name2Rows++;
+        }
+
+        if (row[5] && row[5].toLowerCase().includes("nhà đài")) {
+            nhaDaiRows++;
+        } else {
+            if (row[5] && row[5].trim() !== "" && !row[5].toLowerCase().includes("nhà đài")) {
+                blvRows++;
+            }
+        }
+
+        // Lọc số lượng bài viết
+        if (row[14] && row[14].trim() !== "") {
+            blogSeo++;
+        }
+    });
+
+    // Tạo nội dung HTML cho thông báo tổng hợp
+    const summaryContent = `
+        <div class="dashboard__summary">
+            <p>Tổng trong ca: ${totalRows}</p>
+            <p>Tổng của tôi: ${name1Rows}</p>
+            <p>Tổng của đồng nghiệp: ${name2Rows}</p>
+            <p>Tổng Cỏ: ${nhaDaiRows}</p>
+            <p>Tổng Chính: ${blvRows - 1}</p>
+            <p>Tổng có bài viết: ${blogSeo - 1}</p>
+        </div>
+    `;
+
+    // Cập nhật lại toàn bộ nội dung của dashboard với thông báo tổng hợp
+    dashboard.innerHTML = summaryContent;
 }
 
 // Cập nhật các sự kiện cho nút Copy và Back
