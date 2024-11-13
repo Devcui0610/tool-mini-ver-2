@@ -593,6 +593,7 @@ function displayDashboard(data) {
     dashboard.innerHTML = "";
 
     // Biến tổng hợp các kết quả
+    let dayRows = data[1][3];
     let totalRows = data.length - 1;
     let name1Rows = 0;
     let name2Rows = 0;
@@ -627,6 +628,7 @@ function displayDashboard(data) {
     // Tạo nội dung HTML cho thông báo tổng hợp
     const summaryContent = `
         <div class="dashboard__summary">
+            <p>Ngày làm việc: ${dayRows}</p>
             <p>Tổng trong ca: ${totalRows}</p>
             <p>Tổng của tôi: ${name1Rows}</p>
             <p>Tổng của đồng nghiệp: ${name2Rows}</p>
