@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            /* Khung chung cho các bộ lọc */
+            .filter-container {
+                width: 100%;
+                max-width: 750px;
+                margin: 20px auto;
+                padding: 20px;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .filter-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+                text-align: center;
+                color: #333;
+            }
+
+            /* Các nhóm lọc */
+            .filter-group {
+                margin-bottom: 20px;
+            }
+
+            .filter-group label {
+                font-size: 16px;
+                color: #555;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            /* Input và select */
+            .filter-input,
+            .filter-select {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 14px;
+                border-radius: 8px;
+                box-sizing: border-box;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                transition: border-color 0.3s ease;
+            }
+
+            .filter-select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M16.292%2013.707a1%201%200%200%201%200-1.414l-4-4a1%201%200%200%201%200-1.414l4-4a1%201%200%200%201%200-1.414L10.586%204.707A3%203%200%200%200%209%206.586V17.414a3%203%200%200%200%209.586%204.707l5.707-5.707a1%201%200%200%201%200-1.414z%22%20fill%3D%22%23ccc%22%20/%3E%3C/svg%3E");
+                background-position: right 10px center;
+                background-repeat: no-repeat;
+                background-size: 12px;
+            }
+
+            /* Nút lọc */
+            .filter-btn {
+                background-color: #007bff;
+                color: white;
+                padding: 12px 18px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+            }
+
+            .filter-btn:hover {
+                background-color: #0056b3;
+            }
+
+            /* Nút đặt lại */
+            .filter-btn.reset {
+                background-color: #ff6347;
+            }
+
+            .filter-btn.reset:hover {
+                background-color: #e53e3e;
+            }
+
+            /* Tạo hiệu ứng hover cho các input/select */
+            .filter-input:hover,
+            .filter-select:hover {
+                border-color: #007bff;
+            }
+
+            /* Cải tiến date picker */
+            .filter-input[type="date"] {
+                background-color: #f1f1f1;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                padding: 12px 18px;
+                border-radius: 8px;
+                font-size: 14px;
+                color: #333;
+            }
+
+            .filter-input[type="date"]:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+
+            /* Chỉnh sửa Modal Lịch */
+            .modal-calendar {
+                display: none;
+                position: absolute;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+                width: 300px;
+                top: 50px;
+                left: 0;
+                right: 0;
+                margin: auto;
+                z-index: 10;
+            }
+
+            /* Hiển thị lịch custom */
+            .calendar-header {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .calendar-header button {
+                background-color: transparent;
+                border: none;
+                font-size: 18px;
+                color: #007bff;
+                cursor: pointer;
+            }
+
+            .calendar-days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 8px;
+            }
+
+            .calendar-days span {
+                text-align: center;
+                font-size: 14px;
+                font-weight: bold;
+                padding: 8px;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+                cursor: pointer;
+            }
+
+            .calendar-days span:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .calendar-days span.selected {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .calendar-days span.disabled {
+                color: #ccc;
+                cursor: not-allowed;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="filter-container">
+            <h2 class="filter-title">Bộ lọc dữ liệu</h2>
+
+            <div class="filter-group">
+                <label for="searchInput">Tìm kiếm:</label>
+                <input type="text" id="searchInput" class="filter-input" placeholder="Nhập từ khóa" />
+            </div>
+
+            <div class="filter-group">
+                <label for="statusSelect">Trạng thái:</label>
+                <select id="statusSelect" class="filter-select">
+                    <option value="">Tất cả</option>
+                    <option value="night">NIGHT</option>
+                    <option value="day">DAY</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="dateRange">Chọn phạm vi ngày:</label>
+                <input type="text" id="dateStart" class="filter-input" placeholder="Chọn ngày bắt đầu" />
+                <span>Đến</span>
+                <input type="text" id="dateEnd" class="filter-input" placeholder="Chọn ngày kết thúc" />
+            </div>
+
+            <div class="filter-group">
+                <button class="filter-btn">Lọc</button>
+                <button class="filter-btn reset">Đặt lại</button>
+            </div>
+        </div>
+
+        <!-- Modal Calendar -->
+        <div class="modal-calendar" id="calendarModal">
+            <div class="calendar-header">
+                <button id="prevMonth">&lt;</button>
+                <span id="calendarMonth">November 2024</span>
+                <button id="nextMonth">&gt;</button>
+            </div>
+            <div class="calendar-days">
+                <!-- Days will be populated dynamically -->
+            </div>
+        </div>
+
+        <script>
+            let currentMonth = new Date().getMonth(); // Current month (0-11)
+            let currentYear = new Date().getFullYear(); // Current year
+
+            // Function to update the calendar header (Month & Year)
+            function updateCalendarHeader() {
+                const months = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
+                ];
+                document.getElementById("calendarMonth").textContent = `${months[currentMonth]} ${currentYear}`;
+            }
+
+            // Function to generate the days of the month
+            function generateCalendarDays() {
+                const daysContainer = document.querySelector(".calendar-days");
+                daysContainer.innerHTML = ""; // Clear previous days
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                // Add empty spaces for the first day of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDiv = document.createElement("span");
+                    daysContainer.appendChild(emptyDiv);
+                }
+
+                // Add days of the month
+                for (let i = 1; i <= lastDate; i++) {
+                    const day = document.createElement("span");
+                    day.textContent = i;
+                    day.classList.add("day");
+                    day.addEventListener("click", function () {
+                        // Select date logic
+                        document.getElementById("dateStart").value = `${currentYear}-${
+                            currentMonth + 1 < 10 ? "0" : ""
+                        }${currentMonth + 1}-${i < 10 ? "0" + i : i}`;
+                        document.getElementById("calendarModal").style.display = "none";
+                    });
+                    daysContainer.appendChild(day);
+                }
+            }
+
+            // Handle month change
+            document.getElementById("prevMonth").addEventListener("click", function () {
+                if (currentMonth > 0) {
+                    currentMonth--;
+                } else {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                updateCalendarHeader();
+                generateCalendarDays();
+            });
+
+            document.getElementById("nextMonth").addEventListener("click", function () {
+                if (currentMonth < 11) {
+                    currentMonth++;
+                } else {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                updateCalendarHeader();
+                generateCalendarDays();
+            });
+
+            // Show calendar modal on input click
+            document.getElementById("dateStart").addEventListener("click", function () {
+                document.getElementById("calendarModal").style.display = "block";
+            });
+
+            // Initialize calendar on page load
+            updateCalendarHeader();
+            generateCalendarDays();
+        </script>
+    </body>
+</html>

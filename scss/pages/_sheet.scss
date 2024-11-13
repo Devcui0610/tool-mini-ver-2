@@ -1,0 +1,110 @@
+/* CSS cho bảng */
+// .dataTable {
+//     width: 100%;
+//     border-collapse: collapse;
+//     border-radius: 10px;
+//     overflow: auto;
+//     font-size: 1rem;
+//     table-layout: fixed;
+// }
+
+.dataTable th,
+.dataTable td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.dataTable th {
+    background-color: var(--table-thead);
+    // background-color: #16a085;
+    color: #fafafa;
+    font-weight: 600;
+}
+
+.dataTable tr {
+    background: var(--table-tr);
+    // background: #e8f6f3;
+    transition: background 0.25s;
+}
+
+.dataTable tr:nth-child(even) {
+    background: var(--table-tr-even);
+    // background: #e8f6f3;
+}
+
+.dataTable th:nth-child(3),
+.dataTable th:nth-child(4),
+.dataTable th:nth-child(5),
+.dataTable th:nth-child(6),
+.dataTable th:nth-child(7),
+.dataTable th:nth-child(8),
+.dataTable th:nth-child(9),
+.dataTable td:nth-child(3),
+.dataTable td:nth-child(4),
+.dataTable td:nth-child(5),
+.dataTable td:nth-child(6),
+.dataTable td:nth-child(7),
+.dataTable td:nth-child(8),
+.dataTable td:nth-child(9) {
+    text-align: center;
+}
+
+#loading {
+    font-size: 1.2rem;
+    color: #4880ff;
+    margin-top: 10px;
+}
+
+#notification {
+    font-size: 1rem;
+    color: green;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.dataTable th,
+.dataTable td {
+    padding: 10px;
+    text-align: left; /* Mặc định căn trái */
+    border: 0.6px solid var(--table-border);
+    white-space: nowrap;
+}
+
+.text-report__item.copied {
+    background-color: var(--table-tr); /* Màu nền xanh nhạt */
+    border-left: 5px solid var(--color-primary); /* Viền xanh bên trái để làm nổi bật */
+}
+
+.text-report__item .text-report__item-copy {
+    border: none;
+    border-radius: 7px;
+    padding: 5px 8px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+// .text-report__item .text-report__item-copy:hover {
+//     background-color: #fff3e9; /* Màu nền khi hover */
+// }

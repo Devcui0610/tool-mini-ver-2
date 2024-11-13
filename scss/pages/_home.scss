@@ -1,0 +1,162 @@
+.main {
+    display: flex;
+}
+
+.content {
+    flex: 1;
+    height: auto;
+    background: var(--bg-body);
+    border-top: 0.5px solid var(--separator);
+    padding: 24px;
+    z-index: 2;
+    min-height: 880px;
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-size: 3.2rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.114px;
+    }
+}
+
+.add-sheet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: normal;
+
+    border: 1px solid var(--border-filter);
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: #fff;
+
+    &__icon {
+        filter: var(--filter-white);
+    }
+}
+
+.wrap-noti {
+    position: relative;
+    height: 10px;
+    margin-top: -25px;
+    margin-bottom: 20px;
+
+    &__text {
+        position: absolute;
+        top: 0;
+        left: 3px;
+    }
+}
+
+.text-report {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: 600px;
+    overflow: auto;
+    overscroll-behavior: contain;
+
+    &__item {
+        padding: 12px 20px;
+        background: var(--bg-filter);
+        border-left: 5px solid var(--bg-filter);
+        // box-shadow: inset 0px 10px 54px -6px rgba(0, 0, 0, 0.1);
+        border: 0.6px solid var(--color-primary);
+        border-radius: 10px;
+
+        &--title {
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+    }
+
+    &__input-key {
+        border: 1px solid var(--table-border);
+        border-radius: 10px;
+        height: 30px;
+        padding: 0 10px;
+        margin-bottom: 10px;
+    }
+
+    &__item-back {
+        margin-left: auto;
+    }
+}
+
+.dataTable {
+    height: 600px;
+    border-radius: 10px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    font-size: 1rem;
+
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    /* Lớp mở rộng bảng khi cần thiết */
+    &.expanded {
+        height: auto; /* Đặt chiều cao tự động để không có thanh cuộn */
+        overflow: visible; /* Tắt thanh cuộn */
+    }
+}
+
+.tab-page {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    &__item {
+        padding: 3px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--color-primary);
+
+        &.tab-page__item--active {
+            color: #fafafa;
+            background: var(--color-primary);
+        }
+    }
+}
+
+/* Tạo kiểu cho toàn bộ thanh cuộn */
+.text-report,
+.dataTable {
+    scrollbar-width: thin; /* Cũng áp dụng cho Firefox */
+    scrollbar-color: rgba(200, 200, 200, 0.39) rgba(75, 75, 75, 0.39); /* Màu cuộn và nền thanh cuộn */
+}
+
+.text-report::-webkit-scrollbar,
+.dataTable::-webkit-scrollbar {
+    width: 6px; /* Chiều rộng thanh cuộn dọc */
+    height: 12px; /* Chiều cao thanh cuộn ngang */
+}
+
+/* Màu nền thanh cuộn */
+.text-report::-webkit-scrollbar-track,
+.dataTable::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+/* Màu và kiểu cho thanh cuộn */
+.text-report::-webkit-scrollbar-thumb,
+.dataTable::-webkit-scrollbar-thumb {
+    background-color: rgba(200, 200, 200, 0.39); /* Màu thanh cuộn */
+    border-radius: 10px; /* Bo góc */
+    border: 3px solid #f0f0f0; /* Viền xung quanh thanh cuộn */
+}
