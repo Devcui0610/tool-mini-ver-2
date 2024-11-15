@@ -173,7 +173,7 @@ async function fetchSheetData(apiKey, sheetId, rangeApi) {
             saveToLocalStorage('sheetData', newArrayTable);
             arrayTable = newArrayTable; // Cập nhật dữ liệu hiện tại
 
-            console.log("Fetched Array Table: ", arrayTable)
+            // console.log("Fetched Array Table: ", arrayTable)
 
             // Thông báo thành công
             notification.textContent = "Dữ liệu mới đã được cập nhật thành công.";
@@ -220,6 +220,7 @@ async function fetchSheetData(apiKey, sheetId, rangeApi) {
  * - Gọi Fetch Data từ Google Sheets về
  */
 function displayData(data) {
+
     // Kiểm tra xem dữ liệu có hợp lệ không
     if (!Array.isArray(data) || data.length === 0) {
         console.log("Dữ liệu không hợp lệ hoặc rỗng.");
@@ -253,9 +254,42 @@ function displayData(data) {
     // 4. Tạo các hàng dữ liệu
     data.slice(1).forEach(row => { // Bỏ qua hàng đầu tiên vì đã dùng làm tiêu đề
         const tableRow = document.createElement('tr');
-        row.forEach(cellData => {
+        row.forEach((cellData, index) => {
             const td = document.createElement('td');
-            td.textContent = cellData;
+            const childTd = document.createElement('span');
+            childTd.classList.add("child-of-td");
+            td.appendChild(childTd);
+
+
+            // Áp dụng logic thay đổi text hoặc CSS
+            if (index === 8) { // Cột số 8 (index = 7)
+                if (cellData === "TRUE") {
+                    childTd.textContent = "Đã hoàn thành";
+                    childTd.classList.add("done");
+                } else if (cellData === "FALSE") {
+                    childTd.textContent = "Chưa diễn ra";
+                    childTd.classList.add("doing");
+                } else {
+                    childTd.textContent = cellData; // Giữ nguyên nội dung nếu không phải TRUE/FALSE
+                }
+            } else if (index === 7) {
+                if (cellData === "NIGHT") {
+                    childTd.textContent = cellData;
+                    childTd.classList.add("user-1");
+                } else if (cellData === "GOKU") {
+                    childTd.textContent = cellData;
+                    childTd.classList.add("user-2");
+                }
+            } else if (index === 5) {
+                if (cellData !== "Nhà Đài") {
+                    childTd.textContent = cellData;
+                    childTd.classList.add("voice");
+                } else {
+                    childTd.textContent = cellData;
+                }
+            } else {
+                childTd.textContent = cellData; // Các cột khác
+            }
             tableRow.appendChild(td);
         })
         tbody.appendChild(tableRow);
@@ -455,7 +489,7 @@ function filterSheetDataCustom(data, oneDay = 0) {
         const minute = parseInt(timeParts[1], 10);
 
         const rowDateTime = new Date(year, month, day, hour, minute);
-        console.log(rowDateTime)
+        // console.log(rowDateTime)
 
         // Kiểm tra xem ngày giờ trong hàng có nằm trong khoảng thời gian không
         return rowDateTime >= startDay && rowDateTime <= endDay;
@@ -846,3 +880,11 @@ tabListFilter.forEach(item => {
         item.classList.add("tab-page__item--active");
     });
 });
+
+/**
+ * =====================================
+ *  XỬ LÝ TEXT TÌNH TRẠNG TRUE / FALSE
+ * =====================================
+ * Mô tả:
+ * - Hàm xử lý chụp màn hình bảng
+ */
