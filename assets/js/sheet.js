@@ -532,7 +532,6 @@ function updateDataBasedOnDay() {
     saveToLocalStorage('filteredData', filteredData); // Lưu dữ liệu đã lọc
 }
 
-
 // ===============
 // Hàm hiển thị thông tin textReport
 function displayReport(data) {
@@ -565,7 +564,7 @@ function displayReport(data) {
                 </button>
             </div>
             <p class="text-report__item--title">${row[1]} - ${row[3]}</p>
-            <p class="text-report__item--title"> ${row[5]}</p>
+            <p class="text-report__item--title"> ${row[5]} - ${row[4]}</p>
             <p class="d-none"><span class="input-value">[Chưa nhập]</span></p>
         </div>
         `;
