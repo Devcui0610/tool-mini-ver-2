@@ -588,6 +588,7 @@ function displayReport(data) {
 // Hàm hiển thị thông tin textReport
 function displayDashboard(data) {
     const dashboard = document.querySelector('.dashboard');
+    const dashboardTextarea = document.getElementById('summaryTemplate');
 
     // Xoá tất cả các mục hiện có trong dashboard
     dashboard.innerHTML = "";
@@ -597,8 +598,8 @@ function displayDashboard(data) {
     let totalRows = data.length - 1;
     let name1Rows = 0;
     let name2Rows = 0;
-    let nhaDaiRows = 0;
-    let blvRows = 0;
+    let lowRows = 0;
+    let highRows = 0;
     let blogSeo = 0;
 
     // Lọc dữ liệu nội bộ
@@ -612,10 +613,10 @@ function displayDashboard(data) {
         }
 
         if (row[5] && row[5].toLowerCase().includes("nhà đài")) {
-            nhaDaiRows++;
+            lowRows++;
         } else {
             if (row[5] && row[5].trim() !== "" && !row[5].toLowerCase().includes("nhà đài")) {
-                blvRows++;
+                highRows++;
             }
         }
 
@@ -625,21 +626,42 @@ function displayDashboard(data) {
         }
     });
 
-    // Tạo nội dung HTML cho thông báo tổng hợp
-    const summaryContent = `
-        <div class="dashboard__summary">
-            <p>Ngày làm việc: ${dayRows}</p>
-            <p>Tổng trong ca: ${totalRows}</p>
-            <p>Tổng của tôi: ${name1Rows}</p>
-            <p>Tổng của đồng nghiệp: ${name2Rows}</p>
-            <p>Tổng Cỏ: ${nhaDaiRows}</p>
-            <p>Tổng Chính: ${blvRows - 1}</p>
-            <p>Tổng có bài viết: ${blogSeo - 1}</p>
-        </div>
-    `;
+    // Kiểm tra nếu textarea tồn tại
+    if (dashboardTextarea) {
+        // Lấy cấu trúc từ localStorage nếu có
+        const savedTemplate = localStorage.getItem("summaryTemplate");
+        if (savedTemplate) {
+            dashboardTextarea.value = savedTemplate;
+            renderDashboard(savedTemplate);
+        } else {
+            renderDashboard(dashboardTextarea.value);
+        }
 
-    // Cập nhật lại toàn bộ nội dung của dashboard với thông báo tổng hợp
-    dashboard.innerHTML = summaryContent;
+        // Sự kiện tự động lưu vào localStorage khi người dùng nhập
+        dashboardTextarea.addEventListener("input", () => {
+            const template = dashboardTextarea.value;
+            localStorage.setItem("summaryTemplate", template);
+            renderDashboard(template);
+        });
+    }
+
+
+    // Hàm hiển thị nội dung dashboard
+    function renderDashboard(template) {
+        // Thay thế các biến số bằng dữ liệu mẫu
+        const summaryContent = template
+            .replace('${dayRows}', dayRows)
+            .replace('${totalRows}', totalRows)
+            .replace('${name1Rows}', name1Rows)
+            .replace('${name2Rows}', name2Rows)
+            .replace('${lowRows}', lowRows)
+            .replace('${highRows - 1}', highRows - 1)
+            .replace('${blogSeo - 1}', blogSeo - 1)
+            .replace(/\n/g, '<br>');
+
+        // Cập nhật nội dung vào dashboard
+        dashboard.innerHTML = `<div class="dashboard__summary">${summaryContent}</div>`;
+    }
 }
 
 // Cập nhật các sự kiện cho nút Copy và Back
@@ -806,3 +828,22 @@ function restoreTable() {
     const table = document.querySelector('.dataTable');
     table.classList.remove('expanded');  // Khôi phục lại trạng thái ban đầu
 }
+
+/**
+ * =====================================
+ *  XỬ LÝ NÚT CHUYỂN TAB LỌC THEO NGÀY
+ * =====================================
+ * Mô tả:
+ * - Hàm xử lý chụp màn hình bảng
+ */
+const tabListFilter = document.querySelectorAll(".tab-page__item");
+
+tabListFilter.forEach(item => {
+    item.addEventListener('click', () => {
+        // Xóa class "tab-page__item--active" khỏi tất cả các item
+        tabListFilter.forEach(tab => tab.classList.remove("tab-page__item--active"));
+
+        // Thêm class "tab-page__item--active" vào item được nhấp
+        item.classList.add("tab-page__item--active");
+    });
+});

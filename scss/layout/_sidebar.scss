@@ -12,12 +12,18 @@
     }
 
     &.hidden {
-        width: 0;
+        width: 70px;
     }
 
     &__inner {
         height: 100%;
         width: 100%;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
     }
 
     &__list {
@@ -42,7 +48,7 @@
     &__link {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 24px;
         padding: 15px 0;
 
         font-size: 1.4rem;

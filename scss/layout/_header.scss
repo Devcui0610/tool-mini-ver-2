@@ -10,7 +10,8 @@
     }
 
     &__logo {
-        width: 240px;
+        width: 92px;
+        margin-left: 39px;
         text-align: center;
 
         @include utils.screen(md) {
@@ -19,11 +20,11 @@
     }
 
     &__menu {
-        margin-left: 22px;
+        margin-left: 24px;
 
-        @include utils.screen(md) {
-            margin-left: 10px;
-        }
+        // @include utils.screen(md) {
+        //     margin-left: 10px;
+        // }
     }
 
     &__info {

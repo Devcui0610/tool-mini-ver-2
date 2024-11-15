@@ -1,3 +1,5 @@
+@use "../utils";
+
 .tab-page {
     display: flex;
     align-items: center;
@@ -148,6 +150,12 @@
         border: 0.6px solid var(--table-border);
         vertical-align: middle;
         line-height: 1.5;
+
+        white-space: nowrap;
+
+        @include utils.screen(md) {
+            white-space: wrap;
+        }
     }
 
     & th {
@@ -185,8 +193,13 @@
         text-align: center;
     }
 
+    // & th,
+    // & td:nth-child(2) {
+    //     white-space: nowrap;
+    // }
+
     & th,
-    & td:nth-child(2) {
-        white-space: nowrap;
+    & td:nth-child(1) {
+        width: 50px;
     }
 }

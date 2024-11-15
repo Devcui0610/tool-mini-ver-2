@@ -10,8 +10,8 @@ html {
     // Body:
     --bg-body: var(--bg-box-ver2);
     --text-color: #202224;
-    --color-primary: #05736d;
-    $color-table: #05736d;
+    --color-primary: #fa983a;
+    $color-table: #fa983a;
     --bg-header: #fff;
 
     // Chung:
@@ -45,4 +45,7 @@ html {
 
     // Card item:
     --bg-card-item: var(--bg-filter);
+
+    // Bg Gradient:
+    --bg-gradient: var(--color-primary);
 }
