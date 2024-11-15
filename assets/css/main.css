@@ -1464,6 +1464,11 @@ html.dark .icon {
   white-space: nowrap;
   user-select: none;
 }
+@media (max-width: 575.98px) {
+  .btn {
+    height: 32px;
+  }
+}
 .btn--small {
   height: 25px;
 }
@@ -1728,6 +1733,11 @@ html.dark .icon {
   border-radius: 10px;
   padding: 20px;
 }
+@media (max-width: 575.98px) {
+  .report-modal__inner {
+    width: calc(100% - 30px);
+  }
+}
 .report-modal__row {
   display: flex;
   align-items: start;
@@ -1762,6 +1772,11 @@ html.dark .icon {
 @media (max-width: 767.98px) {
   .report-modal__textarea {
     font-size: 1.6rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .report-modal__textarea {
+    height: 190px;
   }
 }
 .report-modal__textarea:focus {
@@ -1841,6 +1856,11 @@ html.dark .icon {
   background: var(--bg-box);
   padding: 14px 20px 24px;
 }
+@media (max-width: 575.98px) {
+  .modal__content {
+    width: calc(100% - 30px);
+  }
+}
 .modal__row {
   display: flex;
   align-items: start;
@@ -1919,6 +1939,7 @@ html.dark .icon {
 @media (max-width: 767.98px) {
   .header__logo {
     width: 100px;
+    margin-left: 15px;
   }
 }
 .header__menu {
@@ -2074,11 +2095,22 @@ html.dark .icon {
   justify-content: space-between;
   margin-top: 12px;
 }
+@media (max-width: 575.98px) {
+  .content__row {
+    margin-top: 8px;
+  }
+}
 .content__title {
   font-size: 3.2rem;
   font-weight: 700;
   line-height: normal;
   letter-spacing: -0.114px;
+}
+@media (max-width: 575.98px) {
+  .content__title {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
 }
 
 .add-sheet {
@@ -2268,7 +2300,7 @@ html.dark .icon {
 .dataTable th, .dataTable td {
   padding: 10px;
   text-align: left;
-  border: 0.6px solid var(--table-border);
+  border: 1px solid var(--table-border);
   vertical-align: middle;
   line-height: 1.5;
   white-space: nowrap;

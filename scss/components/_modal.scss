@@ -1,3 +1,5 @@
+@use "../utils";
+
 .modal {
     &__box {
         position: fixed;
@@ -18,6 +20,10 @@
         border-radius: 10px;
         background: var(--bg-box);
         padding: 14px 20px 24px;
+
+        @include utils.screen(sm) {
+            width: calc(100% - 30px);
+        }
     }
 
     &__row {

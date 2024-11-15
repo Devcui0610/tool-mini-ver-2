@@ -1,3 +1,5 @@
+@use "../utils";
+
 .menu-toggle {
     &__icon {
         width: 32px;
@@ -17,6 +19,10 @@
     height: 44px;
     border-radius: 8px;
     padding: 0 18px;
+
+    @include utils.screen(sm) {
+        height: 32px;
+    }
 
     background: var(--bg-primary-button);
     font-weight: 500;

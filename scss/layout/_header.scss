@@ -16,6 +16,7 @@
 
         @include utils.screen(md) {
             width: 100px;
+            margin-left: 15px;
         }
     }
 
