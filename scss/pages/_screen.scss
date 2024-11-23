@@ -1,0 +1,94 @@
+.container {
+    &__btn-text {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #fff;
+    }
+    &__btn-icon {
+        filter: var(--filter-white);
+    }
+}
+
+.card-window {
+    position: relative;
+    height: 450px;
+    width: 100%;
+    border-radius: 10px;
+
+    &__box-ctrl {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -19px;
+    }
+
+    &__show {
+        border: 3px solid var(--color-primary);
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    &__iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &__box {
+        background: var(--color-primary);
+        height: 100%;
+
+        &--left {
+            border-radius: 15px 0 99px 0;
+            padding: 3px 15px 7px 5px;
+        }
+
+        &--center {
+            border-radius: 0 0 99px 99px;
+            padding: 3px 5px;
+            width: 150px;
+
+            font-size: 2.5rem;
+            text-align: center;
+            font-weight: 600;
+
+            background: #00b69b;
+        }
+
+        &--right {
+            border-radius: 0 15px 0 99px;
+            padding: 1px 5px 1px 10px;
+        }
+    }
+
+    &__btn-close {
+        transition: transform 0.2s;
+
+        &:not(:first-child) {
+            margin-left: 10px;
+        }
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
+
+    &__btn-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    &__input {
+        &-minutes,
+        &-seconds {
+            width: 50px;
+        }
+    }
+}

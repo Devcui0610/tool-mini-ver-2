@@ -2368,4 +2368,79 @@ html.dark .icon {
   background: #ef3826;
 }
 
+.container__btn-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #fff;
+}
+.container__btn-icon {
+  filter: var(--filter-white);
+}
+
+.card-window {
+  position: relative;
+  height: 450px;
+  width: 100%;
+  border-radius: 10px;
+}
+.card-window__box-ctrl {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -19px;
+}
+.card-window__show {
+  border: 3px solid var(--color-primary);
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.card-window__iframe {
+  width: 100%;
+  height: 100%;
+}
+.card-window__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.card-window__box {
+  background: var(--color-primary);
+  height: 100%;
+}
+.card-window__box--left {
+  border-radius: 15px 0 99px 0;
+  padding: 3px 15px 7px 5px;
+}
+.card-window__box--center {
+  border-radius: 0 0 99px 99px;
+  padding: 3px 5px;
+  width: 150px;
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+  background: #00b69b;
+}
+.card-window__box--right {
+  border-radius: 0 15px 0 99px;
+  padding: 1px 5px 1px 10px;
+}
+.card-window__btn-close {
+  transition: transform 0.2s;
+}
+.card-window__btn-close:not(:first-child) {
+  margin-left: 10px;
+}
+.card-window__btn-close:hover {
+  transform: scale(1.15);
+}
+.card-window__btn-icon {
+  width: 16px;
+  height: 16px;
+}
+.card-window__input-minutes, .card-window__input-seconds {
+  width: 50px;
+}
+
 /*# sourceMappingURL=main.css.map */
