@@ -2086,7 +2086,7 @@ html.dark .icon {
   background: var(--bg-body);
   border-top: 0.5px solid var(--separator);
   z-index: 2;
-  min-height: 390px;
+  min-height: 100vh;
   width: 100%;
 }
 .content__row {
@@ -2303,7 +2303,7 @@ html.dark .icon {
   border-radius: 10px;
   overflow: auto;
   overscroll-behavior: contain;
-  font-size: 1rem;
+  font-size: 1.2rem;
   border-collapse: collapse;
   table-layout: fixed;
   /* Lớp mở rộng bảng khi cần thiết */
@@ -2313,7 +2313,7 @@ html.dark .icon {
   overflow: visible; /* Tắt thanh cuộn */
 }
 .dataTable th, .dataTable td {
-  padding: 5px 7px;
+  padding: 3px 7px;
   text-align: left;
   border: 0.6px solid var(--table-border);
   vertical-align: middle;
@@ -2348,9 +2348,9 @@ html.dark .icon {
   display: block;
   border-radius: 4.5px;
   color: #fff;
-  width: 93px;
-  height: 27px;
-  line-height: 27px;
+  width: 120px;
+  height: 22px;
+  line-height: 22px;
 }
 .child-of-td.done {
   background: #00b69b;
