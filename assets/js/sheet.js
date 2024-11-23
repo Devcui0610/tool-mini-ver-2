@@ -883,8 +883,20 @@ tabListFilter.forEach(item => {
 
 /**
  * =====================================
- *  XỬ LÝ TEXT TÌNH TRẠNG TRUE / FALSE
+ *  XỬ LÝ NÚT BACK XOÁ CÁC CARD ĐÃ COPY
  * =====================================
  * Mô tả:
- * - Hàm xử lý chụp màn hình bảng
+ * - Hàm xử lý xoá các Card highlight khi nhấn vào Copy
  */
+document.querySelector(".back-copy").addEventListener('click', deleteHighlightCopy);
+function deleteHighlightCopy() {
+    const listHighlightCopy = document.querySelectorAll(".text-report__item");
+
+    [...listHighlightCopy].forEach(card => {
+        if (card.classList.contains('copied')) {
+            card.classList.remove("copied");
+        }
+    })
+
+    removeFromLocalStorage('copiedItems');
+}

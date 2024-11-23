@@ -97,4 +97,22 @@
     @include utils.screen(md) {
         width: 100%;
     }
+
+    &__ctrl {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+}
+
+.back-copy {
+    padding: 3px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary);
+    margin-left: auto;
+
+    &:hover {
+        color: #fafafa;
+        background: var(--color-primary);
+    }
 }
