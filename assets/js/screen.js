@@ -21,6 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/**
+ * =====================================
+ *         XỬ LÝ SO SÁNH ĐỒNG HỒ
+ * =====================================
+ * Mô tả:
+ * - Hàm xử lý chụp màn hình bảng
+ */
 // Khởi tạo dữ liệu cho tất cả các đồng hồ
 const timers = [];
 
@@ -91,32 +98,160 @@ document.querySelectorAll(".card-window").forEach((cardWindow, index) => {
     updateDisplay();
 });
 
+/**
+ * =====================================
+ *      XỬ LÝ ẨN HIỆN KẾT QUẢ TEXT
+ * =====================================
+ * Mô tả:
+ * - Hàm xử lý chụp màn hình bảng
+ */
 document.addEventListener("DOMContentLoaded", () => {
-    // Lắng nghe sự kiện click vào nút chụp ảnh
-    const captureButton = document.querySelector("#capture-screen");
-    const inputResolution = document.querySelector(".filter-show__column-num"); // Lấy input độ nét
+    const comparisonList = document.querySelector("#comparison-list");  // Vùng chứa thông báo so sánh
+    const startButtons = document.querySelectorAll(".start-btn");  // Tất cả các nút khởi chạy
+    const cardItems = document.querySelectorAll(".card-window");  // Các card-item
 
-    captureButton.addEventListener("click", () => {
-        // Tìm phần tử cha chứa tất cả các card-item
-        const rowElement = document.querySelector(".row");
+    let timers = []; // Mảng lưu thời gian đã được chạy
+    let timeIntervals = []; // Mảng lưu các interval để dừng khi cần
 
-        if (rowElement) {
-            // Đọc giá trị độ nét từ input
-            const resolution = parseInt(inputResolution.value) || 5; // Mặc định là 5 nếu không có giá trị hợp lệ
+    // Lắng nghe sự kiện nhấn nút khởi chạy cho mỗi card-item
+    startButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+            const cardItem = btn.closest(".card-window");
+            const minuteInput = cardItem.querySelector(".card-window__input-minutes");
+            const secondInput = cardItem.querySelector(".card-window__input-seconds");
 
-            // Sử dụng html2canvas để chụp toàn bộ row
-            html2canvas(rowElement, {
-                scale: resolution // Điều chỉnh độ phân giải
-            }).then(canvas => {
-                // Chuyển canvas thành URL ảnh
-                const imgData = canvas.toDataURL("image/png");
+            // Lấy thời gian từ các input phút và giây
+            const minutes = parseInt(minuteInput.value, 10) || 0;
+            const seconds = parseInt(secondInput.value, 10) || 0;
 
-                // Tạo thẻ a để tải ảnh về
-                const link = document.createElement("a");
-                link.href = imgData;
-                link.download = "screenshot.png"; // Đặt tên file ảnh
-                link.click(); // Tự động tải ảnh về máy tính
-            });
+            // Lưu thời gian dưới dạng giây và bắt đầu đồng hồ
+            const startTimeInSeconds = minutes * 60 + seconds;
+            timers[index] = startTimeInSeconds;
+
+            // Bắt đầu đếm thời gian cho card-item này
+            startTimer(index, startTimeInSeconds);
+        });
+    });
+
+    // Hàm bắt đầu đồng hồ
+    function startTimer(index, startTimeInSeconds) {
+        // Lưu giá trị vào mảng timers
+        timeIntervals[index] = setInterval(() => {
+            timers[index]++;
+        }, 1000); // Tăng 1 giây mỗi lần
+    }
+
+    // Khi nhấn nút so sánh, thực hiện so sánh thời gian giữa card-item đầu tiên và các card-item khác
+    const compareButton = document.querySelector("#compare-button");  // Nút so sánh
+    compareButton.addEventListener("click", () => {
+        const notiElement = document.querySelector(".card-window__noti");
+        const icon1 = compareButton.querySelector(".compare-button__icon-1");
+        const icon2 = compareButton.querySelector(".compare-button__icon-2");
+        const textSpan = compareButton.querySelector(".filter-show__text");
+
+
+        if (notiElement.style.display === "none" || !notiElement.style.display) {
+            notiElement.style.display = "block";
+        } else {
+            notiElement.style.display = "none";
+        }
+
+        // Toggle display of icons
+        if (icon1.style.display === "none") {
+            icon1.style.display = "inline"; // Hiển thị icon1
+            icon2.style.display = "none";  // Ẩn icon2
+            textSpan.textContent = "Show Result"; // Đổi text
+        } else {
+            icon1.style.display = "none";  // Ẩn icon1
+            icon2.style.display = "inline"; // Hiển thị icon2
+            textSpan.textContent = "Hide Result"; // Đổi text
+        }
+
+        // Lấy thời gian từ card-item 1 (card-item đầu tiên)
+        const card1Time = timers[0] || 0;
+
+        let comparisonMessages = [];
+
+        // So sánh với card-item từ 2 đến 6 (nếu có)
+        for (let i = 1; i < Math.min(6, cardItems.length); i++) {
+            const currentCardTime = timers[i] || 0;
+
+            // Lấy tên từ tiêu đề người dùng nhập vào (nếu có)
+            const card1Title = cardItems[0].querySelector(".card-window__name").innerText.trim() || `Card-item 1`;
+            const cardTitle = cardItems[i].querySelector(".card-window__name").innerText.trim() || `Card-item ${i + 1}`;
+
+            if (currentCardTime === 0) {
+                comparisonMessages.push(`${cardTitle} OFF`);
+            } else {
+                const difference = card1Time - currentCardTime;
+                const formattedDifference = formatTimeDifference(Math.abs(difference));
+
+                if (difference > 0) {
+                    comparisonMessages.push(`${card1Title} nhanh ${formattedDifference} so với ${cardTitle}`);
+                } else if (difference < 0) {
+                    comparisonMessages.push(`${card1Title} chậm ${formattedDifference} so với ${cardTitle}`);
+                } else {
+                    comparisonMessages.push(`${card1Title} và ${cardTitle} bằng nhau`);
+                }
+            }
+        }
+
+        // Hiển thị các thông báo so sánh
+        comparisonList.innerHTML = "";
+        comparisonMessages.forEach(message => {
+            const listItem = document.createElement("li");
+            listItem.textContent = message;
+            comparisonList.appendChild(listItem);
+
+        });
+    });
+
+    // Hàm format thời gian chênh lệch thành phút và giây
+    function formatTimeDifference(seconds) {
+        const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
+
+        if (minutes > 0) {
+            return `${minutes}p${remainingSeconds}s`;
+        } else {
+            return `${remainingSeconds}s`;
+        }
+    }
+});
+
+/**
+ * =====================================
+ *        XỬ LÝ TIÊU ĐỀ CARD ITEM
+ * =====================================
+ * Mô tả:
+ * - Hàm xử lý chụp màn hình bảng
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    // Lắng nghe sự kiện trên tất cả các thẻ tiêu đề có thể chỉnh sửa (contenteditable)
+    const titles = document.querySelectorAll(".card-window__name");
+
+    titles.forEach((title) => {
+        title.addEventListener("blur", (event) => {
+            const newTitle = event.target.innerText.trim();
+            if (newTitle) {
+                // Lưu tiêu đề mới, có thể lưu vào localStorage hoặc gửi đến server nếu cần
+                // Ví dụ: Lưu vào localStorage với data-id tương ứng
+                const cardWindow = title.closest(".card-window");
+                const cardId = cardWindow ? cardWindow.getAttribute("data-id") : null;
+                if (cardId) {
+                    localStorage.setItem(`cardTitle-${cardId}`, newTitle); // Lưu vào localStorage
+                }
+            }
+        });
+
+        // Nếu có dữ liệu đã lưu từ localStorage, hiển thị vào tiêu đề
+        const cardWindow = title.closest(".card-window");
+        const cardId = cardWindow ? cardWindow.getAttribute("data-id") : null;
+        if (cardId) {
+            const savedTitle = localStorage.getItem(`cardTitle-${cardId}`);
+            if (savedTitle) {
+                title.innerText = savedTitle;
+            }
         }
     });
 });
