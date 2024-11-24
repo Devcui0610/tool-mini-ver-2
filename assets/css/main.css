@@ -2399,7 +2399,8 @@ html.dark .icon {
   right: 0;
   border-radius: 10px;
   transform: translateY(299%);
-  background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+  background-image: linear-gradient(to top, #fff5cb 0%, #e7d796 100%);
+  color: #000;
   z-index: 2;
   display: none;
 }
@@ -2454,7 +2455,8 @@ html.dark .icon {
   font-size: 2.5rem;
   text-align: center;
   font-weight: 600;
-  background: #00b69b;
+  background: #fff6d2;
+  color: #000;
 }
 .card-window__box--right {
   border-radius: 0 15px 0 99px;

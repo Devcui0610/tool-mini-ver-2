@@ -28,8 +28,8 @@
         right: 0;
         border-radius: 10px;
         transform: translateY(299%);
-        // background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
-        background: #fff6d2;
+        background-image: linear-gradient(to top, #fff5cb 0%, #e7d796 100%);
+        color: #000;
         z-index: 2;
         display: none;
 
@@ -96,6 +96,7 @@
             font-weight: 600;
 
             background: #fff6d2;
+            color: #000;
         }
 
         &--right {
