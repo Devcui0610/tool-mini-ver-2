@@ -28,7 +28,8 @@
         right: 0;
         border-radius: 10px;
         transform: translateY(299%);
-        background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+        // background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+        background: #fff6d2;
         z-index: 2;
         display: none;
 
@@ -94,7 +95,7 @@
             text-align: center;
             font-weight: 600;
 
-            background: #00b69b;
+            background: #fff6d2;
         }
 
         &--right {
