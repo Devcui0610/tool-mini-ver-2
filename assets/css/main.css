@@ -2399,7 +2399,7 @@ html.dark .icon {
   right: 0;
   border-radius: 10px;
   transform: translateY(299%);
-  background-image: linear-gradient(to top, #fff5cb 0%, #e7d796 100%);
+  background-image: linear-gradient(to top, #1dff5d 0%, #0dbe3f 100%);
   color: #000;
   z-index: 2;
   display: none;
@@ -2451,11 +2451,11 @@ html.dark .icon {
 .card-window__box--center {
   border-radius: 0 0 99px 99px;
   padding: 3px 5px;
-  width: 150px;
-  font-size: 2.5rem;
+  width: 190px;
+  font-size: 4.5rem;
   text-align: center;
   font-weight: 600;
-  background: #fff6d2;
+  background: #1dff5d;
   color: #000;
 }
 .card-window__box--right {
