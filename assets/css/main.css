@@ -1469,6 +1469,9 @@ html.dark .icon {
     height: 32px;
   }
 }
+.btn--medium {
+  height: 30px;
+}
 .btn--small {
   height: 25px;
 }
@@ -2395,7 +2398,7 @@ html.dark .icon {
   left: 0;
   right: 0;
   border-radius: 10px;
-  transform: translateY(138%);
+  transform: translateY(299%);
   background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
   z-index: 2;
   display: none;
@@ -2404,7 +2407,7 @@ html.dark .icon {
   display: flex;
   padding: 8px;
 }
-.card-window__noti-list li {
+.card-window__noti-list li:not(:last-child) {
   border-right: 1px solid var(--color-primary);
   padding-right: 20px;
   margin-right: 20px;
@@ -2472,6 +2475,30 @@ html.dark .icon {
 }
 .card-window__input-minutes, .card-window__input-seconds {
   width: 50px;
+}
+
+.card-url {
+  background-color: #f4d03f;
+  background-image: linear-gradient(132deg, #f4d03f 0%, #16a085 100%);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+}
+.card-url__title {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.card-url__input {
+  border: 1px solid var(--border-box);
+  border-radius: 10px;
+  padding: 5px;
+}
+.card-url__buttons {
+  display: flex;
+  margin-top: 15px;
 }
 
 /*# sourceMappingURL=main.css.map */

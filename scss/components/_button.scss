@@ -31,6 +31,10 @@
     white-space: nowrap;
     user-select: none;
 
+    &--medium {
+        height: 30px;
+    }
+
     &--small {
         height: 25px;
     }

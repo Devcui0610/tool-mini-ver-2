@@ -255,3 +255,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+// ADD:
+document.addEventListener("DOMContentLoaded", () => {
+    const urlInputs = document.querySelectorAll(".url-input");
+    const saveButton = document.querySelector("#save-urls");
+    const clearButton = document.querySelector("#clear-urls");
+    const cardWindows = document.querySelectorAll(".card-window");
+
+    // Load URL từ localStorage khi tải trang
+    const loadUrls = () => {
+        cardWindows.forEach((cardWindow, index) => {
+            const url = localStorage.getItem(`cardURL-${index}`);
+            const showArea = cardWindow.querySelector(".card-window__show");
+            if (url && showArea) {
+                showArea.innerHTML = `<iframe src="${url}" frameborder="0" class="card-window__iframe"></iframe>`;
+            }
+        });
+    };
+
+    // Lưu URL từ input vào localStorage và hiển thị trên card
+    saveButton.addEventListener("click", () => {
+        urlInputs.forEach((input, index) => {
+            const url = input.value.trim();
+            if (url) {
+                localStorage.setItem(`cardURL-${index}`, url); // Lưu URL vào localStorage
+                const showArea = cardWindows[index].querySelector(".card-window__show");
+                if (showArea) {
+                    showArea.innerHTML = `<iframe src="${url}" frameborder="0" class="card-window__iframe"></iframe>`;
+                }
+            }
+        });
+    });
+
+    // Xóa URL khỏi card nhưng vẫn giữ trong localStorage
+    clearButton.addEventListener("click", () => {
+        cardWindows.forEach((cardWindow) => {
+            const showArea = cardWindow.querySelector(".card-window__show");
+            if (showArea) {
+                showArea.innerHTML = ""; // Xóa iframe khỏi card
+            }
+        });
+    });
+
+    // Tải URL đã lưu khi trang load
+    loadUrls();
+});
