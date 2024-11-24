@@ -260,14 +260,18 @@ function displayData(data) {
             childTd.classList.add("child-of-td");
             td.appendChild(childTd);
 
+            // CSS cho cột đầu tiên của bảng:
+            if (index === 0) { // Cột số 8 (index = 7)
+                childTd.classList.add("width-custom");
+            }
 
             // Áp dụng logic thay đổi text hoặc CSS
             if (index === 8) { // Cột số 8 (index = 7)
                 if (cellData === "TRUE") {
-                    childTd.textContent = "Đã hoàn thành";
+                    childTd.textContent = "Done";
                     childTd.classList.add("done");
                 } else if (cellData === "FALSE") {
-                    childTd.textContent = "Chưa diễn ra";
+                    childTd.textContent = "Doing";
                     childTd.classList.add("doing");
                 } else {
                     childTd.textContent = cellData; // Giữ nguyên nội dung nếu không phải TRUE/FALSE
@@ -830,7 +834,7 @@ function expandTableForScreenshot() {
         setTimeout(() => {
             // Sau khi CSS đã được áp dụng, thực hiện chụp ảnh
             takeScreenshot();
-        }, 500); // Chờ một chút để CSS được áp dụng
+        }, 1000); // Chờ một chút để CSS được áp dụng
     });
 }
 // Hàm chụp ảnh
