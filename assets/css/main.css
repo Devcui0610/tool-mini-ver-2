@@ -2316,7 +2316,6 @@ html.dark .icon {
   overflow: visible; /* Tắt thanh cuộn */
   width: auto; /* Tự động điều chỉnh chiều rộng để chứa nội dung */
   max-width: none; /* Bỏ giới hạn chiều rộng nếu có */
-  display: block; /* Đảm bảo bảng có thể mở rộng */
 }
 .dataTable th, .dataTable td {
   padding: 3px 7px;
@@ -2435,10 +2434,12 @@ html.dark .icon {
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
+  overscroll-behavior: contain;
 }
 .card-window__iframe {
   width: 100%;
   height: 100%;
+  overscroll-behavior: contain;
 }
 .card-window__heading {
   display: flex;

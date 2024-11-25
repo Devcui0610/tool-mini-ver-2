@@ -834,7 +834,7 @@ function expandTableForScreenshot() {
         setTimeout(() => {
             // Sau khi CSS đã được áp dụng, thực hiện chụp ảnh
             takeScreenshot();
-        }, 1000); // Chờ một chút để CSS được áp dụng
+        }, 500); // Chờ một chút để CSS được áp dụng
     });
 }
 // Hàm chụp ảnh
