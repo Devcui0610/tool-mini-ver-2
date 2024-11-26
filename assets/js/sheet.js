@@ -743,6 +743,7 @@ function updateEventListeners(filteredData) {
             textToCopy = textToCopy
                 .replace('${filteredData[index][1]}', filteredData[index][1])
                 .replace('${filteredData[index][3]}', filteredData[index][3])
+                .replace('${filteredData[index][4]}', filteredData[index][4])
                 .replace('${filteredData[index][5]}', filteredData[index][5])
                 .replace('${filteredData[index][7]}', filteredData[index][7])
                 .replace('${filteredData[index][13]}', filteredData[index][13])
