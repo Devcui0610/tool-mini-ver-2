@@ -178,6 +178,7 @@
                             <div class="col-9">
                                 <div class="text-send">
                                     <!-- Nhận dữ liệu Text Send -->
+                                    <div class="text-send__item"></div>
                                 </div>
                             </div>
                         </div>
@@ -199,6 +200,41 @@
                             <div class="col-3 col-lg-12">
                                 <div class="text-report">
                                     <!-- Nhận dữ liệu Report -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Khu vực Text Report -->
+                        <div class="report">
+                            <div class="report__inner">
+                                <div class="row row-cols-2 row-cols-md-1 gy-md-2">
+                                    <div class="col">
+                                        <!-- Input Source -->
+                                        <div class="report__input">
+                                            <div>
+                                                <label for="specificCell">Nhập ô (VD: Sheet1!A1):</label>
+                                                <input
+                                                    type="text"
+                                                    id="specificCell"
+                                                    placeholder="VD: Sheet1!A1"
+                                                    value="REPORT!I4" />
+                                            </div>
+                                            <button id="fetchCellData" class="btn btn--medium">Lấy dữ liệu ô</button>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Result Text -->
+                                        <div class="report__output">
+                                            <div class="report__ctrl">
+                                                <!-- Hiển thị Đã Copy -->
+                                                <span class="report__noti">Đã Copy</span>
+                                                <button class="report__output--copy">
+                                                    <img src="./assets/images/copy.svg" alt="" class="icon" />
+                                                </button>
+                                                <div id="outputCellData" class="report__output-text"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

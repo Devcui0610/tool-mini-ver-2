@@ -35,6 +35,7 @@
 
         &-list {
             display: flex;
+            justify-content: center;
             padding: 8px;
 
             & li:not(:last-child) {

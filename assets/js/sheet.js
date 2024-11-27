@@ -136,6 +136,7 @@ fetchButton.addEventListener('click', () => fetchSheetData(apiKey.value, sheetId
  * - Gọi Fetch Data từ Google Sheets về
  */
 async function fetchSheetData(apiKey, sheetId, rangeApi) {
+
     // Khởi tạo arrayTable từ localStorage nếu có dữ liệu lưu trước đó
     arrayTable = getFromLocalStorage('sheetData') || [];
 
@@ -202,12 +203,12 @@ async function fetchSheetData(apiKey, sheetId, rangeApi) {
             displayDashboard(arrayTable); // Hiển thị nôi dung Report
         }
 
-        // Hiển thị thông báo trong 2 giây
+        // Hiển thị thông báo trong 5 giây
         if (notification.textContent) {
             notification.style.display = 'block';
             setTimeout(() => {
                 notification.style.display = 'none';
-            }, 2000);
+            }, 5000);
         }
     }
 }
@@ -905,3 +906,104 @@ function deleteHighlightCopy() {
 
     removeFromLocalStorage('copiedItems');
 }
+
+/**
+ * =====================================
+ *         XỬ LÝ LẤY TEXT REPORT
+ * =====================================
+ * Mô tả:
+ * - ...
+ */
+async function fetchSpecificCellData(apiKey, sheetId, specificCell) {
+    try {
+        // Kiểm tra đầu vào
+        if (!apiKey || !sheetId || !specificCell) {
+            throw new Error("Thông tin API Key, Sheet ID hoặc phạm vi không hợp lệ.");
+        }
+
+        // Tạo URL API
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${specificCell}?key=${apiKey}`;
+
+        // Gửi yêu cầu đến Google Sheets API
+        const response = await fetch(url);
+
+        // Kiểm tra nếu response không thành công
+        if (!response.ok) {
+            throw new Error(`Lỗi từ API: ${response.status} ${response.statusText}`);
+        }
+
+        // Parse JSON
+        const data = await response.json();
+
+        // Kiểm tra nếu không có dữ liệu
+        if (!data.values || data.values.length === 0) {
+            console.warn("Không có dữ liệu trong phạm vi được chỉ định.");
+            return null; // Không có dữ liệu
+        }
+
+        return data.values; // Trả về dữ liệu
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu từ Google Sheets:", error);
+        alert(`Lỗi: ${error.message}`);
+        return null;
+    }
+}
+
+document.getElementById("fetchCellData").addEventListener("click", async function () {
+    const apiKey = getFromLocalStorage("apiKeyValue");
+    const sheetId = getFromLocalStorage("sheetIdValue");
+    const specificCell = document.getElementById("specificCell").value;
+    const textReport = document.getElementById('outputCellData');
+
+    if (!specificCell) {
+        alert("Vui lòng nhập phạm vi cụ thể (VD: Sheet1!A1).");
+        return;
+    }
+
+    const cellData = await fetchSpecificCellData(apiKey, sheetId, specificCell);
+
+    if (cellData && cellData[0] && cellData[0][0]) {
+        // Xử lý xuống dòng
+        const formattedText = cellData[0][0].replace(/\n/g, "<br>");
+
+        // Hiển thị dữ liệu lên trang web
+        textReport.innerHTML = formattedText;
+    } else {
+        textReport.textContent = "Không có dữ liệu.";
+    }
+});
+
+document.querySelector(".report__output--copy").addEventListener("click", function () {
+    const outputElement = document.getElementById("outputCellData");
+    const notification = document.querySelector(".report__noti");
+
+    // Kiểm tra nếu có nội dung
+    if (outputElement && outputElement.innerHTML.trim() !== "") {
+        // Chuyển đổi các thẻ <br> thành ký tự xuống dòng \n và loại bỏ tất cả các thẻ HTML khác
+        let textToCopy = outputElement.innerHTML
+            .replace(/<br\s*\/?>/gi, '\n')  // Chuyển <br> thành xuống dòng
+            .replace(/<[^>]+>/g, '')       // Loại bỏ tất cả các thẻ HTML
+            .replace(/&gt;/g, '>')         // Giải mã các ký tự đặc biệt
+            .replace(/&lt;/g, '<')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'");
+
+        // Sử dụng Clipboard API để copy nội dung
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                // Hiển thị thông báo "Đã Copy"
+                notification.classList.add("show");
+
+                // Ẩn thông báo sau 2 giây
+                setTimeout(() => {
+                    notification.classList.remove("show");
+                }, 2000);
+            })
+            .catch(err => {
+                console.error("Lỗi khi copy nội dung:", err);
+            });
+    } else {
+        alert("Không có nội dung để copy.");
+    }
+});

@@ -123,3 +123,59 @@
     height: calc(100% - 15px);
     border-radius: 10px;
 }
+
+.report {
+    background: var(--table-tr);
+    border-radius: 10px;
+    margin-top: 30px;
+
+    &__inner {
+        padding: 15px;
+    }
+
+    &__input,
+    &__output {
+        border: 1px solid var(--table-border);
+        border-radius: 10px;
+        min-height: 500px;
+        width: 100%;
+        padding: 10px;
+    }
+
+    &__input {
+        @include utils.screen(md) {
+            min-height: 0;
+        }
+    }
+
+    &__output {
+        position: relative;
+        overflow-wrap: break-word;
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    &__noti {
+        display: none;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        background: #00b69b;
+        border-radius: 10px;
+        padding: 3px 5px;
+
+        &.show {
+            display: inline-block; /* Hiển thị khi thêm lớp 'show' */
+        }
+    }
+
+    &__output--copy {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+    }
+
+    &__output-text {
+        margin-top: 20px;
+    }
+}

@@ -2197,6 +2197,53 @@ html.dark .icon {
   border-radius: 10px;
 }
 
+.report {
+  background: var(--table-tr);
+  border-radius: 10px;
+  margin-top: 30px;
+}
+.report__inner {
+  padding: 15px;
+}
+.report__input, .report__output {
+  border: 1px solid var(--table-border);
+  border-radius: 10px;
+  min-height: 500px;
+  width: 100%;
+  padding: 10px;
+}
+@media (max-width: 767.98px) {
+  .report__input {
+    min-height: 0;
+  }
+}
+.report__output {
+  position: relative;
+  overflow-wrap: break-word;
+  height: 500px;
+  overflow-y: auto;
+}
+.report__noti {
+  display: none;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: #00b69b;
+  border-radius: 10px;
+  padding: 3px 5px;
+}
+.report__noti.show {
+  display: inline-block; /* Hiển thị khi thêm lớp 'show' */
+}
+.report__output--copy {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
+.report__output-text {
+  margin-top: 20px;
+}
+
 .tab-page {
   display: flex;
   align-items: center;
@@ -2422,6 +2469,7 @@ html.dark .icon {
 }
 .card-window__noti-list {
   display: flex;
+  justify-content: center;
   padding: 8px;
 }
 .card-window__noti-list li:not(:last-child) {
