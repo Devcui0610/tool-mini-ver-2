@@ -201,6 +201,7 @@ async function fetchSheetData(apiKey, sheetId, rangeApi) {
             displayData(arrayTable); // Hiển thị nội dung bảng
             displayReport(arrayTable); // Hiển thị nôi dung Report
             displayDashboard(arrayTable); // Hiển thị nôi dung Report
+            displayTextSend(arrayTable);
         }
 
         // Hiển thị thông báo trong 5 giây
@@ -330,6 +331,7 @@ function initializeData() {
         displayData(filteredData);
         displayReport(filteredData);
         displayDashboard(filteredData);
+        displayTextSend(filteredData);
     } else {
         updateDataBasedOnDay();
     }
@@ -342,6 +344,7 @@ function initializeData() {
         displayData(arrayTable); // Hiển thị toàn bộ dữ liệu
         displayReport(arrayTable);
         displayDashboard(arrayTable);
+        displayTextSend(arrayTable);
     } else {
         // Nếu không có dữ liệu trong localStorage, gọi API để lấy dữ liệu
         const apiKey = getFromLocalStorage('apiKey');
@@ -566,6 +569,7 @@ function updateDataBasedOnDay() {
     displayData(filteredData); // Hiển thị dữ liệu đã lọc
     displayReport(filteredData); // Hiển thị dữ liệu đã lọc
     displayDashboard(filteredData); // Hiển thị dữ liệu đã lọc
+    displayTextSend(filteredData)
 
     saveToLocalStorage('oneDay', oneDay); // Lưu ngày
     saveToLocalStorage('filteredData', filteredData); // Lưu dữ liệu đã lọc
@@ -783,6 +787,101 @@ function updateEventListeners(filteredData) {
             saveToLocalStorage('copiedItems', updatedCopiedItems);
         });
     });
+}
+
+/**
+ * =====================================
+ * displayTextSend()
+ * =====================================
+ * Mô tả:
+ * - Hiển thị text Send
+ */
+function displayTextSend(data) {
+    const textSendContainer = document.querySelector('.text-send');
+    const textSendTextArea = document.getElementById("textSend");
+    const itemTextSend = document.querySelector(".text-send__item");
+
+    if (!textSendContainer) {
+        console.error("Không tìm thấy phần tử '.text-send' trên giao diện.");
+        return;
+    }
+
+    // Xóa nội dung cũ
+    textSendContainer.innerHTML = "";
+
+    // Mảng các giá trị cần loại bỏ
+    const excludedValues = ["nhà đài", "david", "pepe", "royce", "eric", "xavi", "kroos"];
+
+    // Lọc dữ liệu: Bỏ dòng tiêu đề, chỉ lấy hàng có cột thứ 6 không thuộc mảng excludedValues
+    const filteredData = data.slice(1).filter(row => {
+        const column6 = row[5]?.trim().toLowerCase(); // Cột thứ 6
+        const condition1 = row[7] === "NIGHT"; // Điều kiện lọc cột 7
+        return !excludedValues.includes(column6) && condition1;
+    });
+
+    // Hiển thị dữ liệu đã lọc
+    filteredData.forEach((row) => {
+        const title = row[1];
+        const nameUser = row[5];
+        const day = row[3]; // Cột ngày
+        const hour = row[4]; // Cột giờ
+
+        // Tạo phần tử item
+        const textSendItem = document.createElement('div');
+        textSendItem.classList.add('text-send__item');
+
+        const textSendInfo = document.createElement('div');
+        textSendInfo.classList.add('text-send__info');
+        textSendInfo.innerHTML = `<span class="text-send__title">${nameUser} - ${day} - ${hour}</span>`;
+
+        const copyButton = document.createElement('button');
+        copyButton.classList.add('text-send__btn');
+        copyButton.innerHTML = `<img src="./assets/images/copy.svg" alt="Copy" class="icon" />`;
+
+        // Xử lý sự kiện sao chép
+        copyButton.addEventListener('click', () => {
+            // Lấy nội dung từ textSendTextArea và thay thế các biến
+            let textToCopy = textSendTextArea.value.trim();
+
+            // Thay thế các biến trong mẫu
+            textToCopy = textToCopy
+                .replace('${title}', title)
+                .replace('${day}', day)
+                .replace('${hour}', hour)
+                .replace('${nameUser}', nameUser);
+
+            // Sao chép nội dung vào clipboard
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        // Thêm class 'copied' vào textSendItem khi sao chép thành công
+                        textSendItem.classList.toggle("copied");
+                    })
+                    .catch((err) => console.error('Không thể sao chép nội dung:', err));
+            } else {
+                alert('Vui lòng nhập nội dung trước khi sao chép.');
+            }
+        });
+
+        textSendItem.appendChild(textSendInfo);
+        textSendItem.appendChild(copyButton);
+        textSendContainer.appendChild(textSendItem);
+    });
+
+    // Lưu nội dung textArea vào localStorage
+    if (textSendTextArea) {
+        // Kiểm tra và hiển thị nội dung đã lưu từ localStorage khi trang tải lại
+        const savedText = localStorage.getItem('textSend');
+        if (savedText) {
+            textSendTextArea.value = savedText;
+        }
+
+        // Lắng nghe sự kiện input để lưu giá trị vào localStorage
+        textSendTextArea.addEventListener('input', () => {
+            const text = textSendTextArea.value; // Lấy nội dung người dùng nhập
+            localStorage.setItem('textSend', text); // Lưu vào localStorage
+        });
+    }
 }
 
 /**

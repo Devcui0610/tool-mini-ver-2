@@ -86,6 +86,7 @@
     display: inline-flex;
     align-items: center;
     width: 100%;
+    height: 190px;
 
     margin-bottom: 15px;
     background-color: var(--border-box);
@@ -118,10 +119,29 @@
 }
 
 .text-send {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cột, mỗi cột chiếm 1 phần đều nhau */
+    grid-auto-rows: auto; /* Chiều cao hàng tự động tùy thuộc nội dung */
+    gap: 10px; /* Khoảng cách giữa các item */
     border: 1px solid var(--color-primary);
     width: 100%;
-    height: calc(100% - 15px);
+    height: 190px;
     border-radius: 10px;
+    padding: 10px;
+    overflow: auto;
+
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 10px;
+        padding: 5px 10px;
+        border: 1px solid var(--color-primary);
+
+        &.copied {
+            background: var(--color-primary);
+        }
+    }
 }
 
 .report {
