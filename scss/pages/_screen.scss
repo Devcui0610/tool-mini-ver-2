@@ -22,6 +22,7 @@
     border-radius: 10px;
 
     &__noti {
+        align-items: center;
         position: absolute;
         top: 50%;
         left: 0;
@@ -32,6 +33,8 @@
         color: #000;
         z-index: 2;
         display: none;
+        justify-content: space-between;
+        padding: 0 10px;
 
         &-list {
             display: flex;
@@ -44,6 +47,18 @@
                 margin-right: 20px;
             }
         }
+    }
+
+    &__copy-btn {
+        margin-left: 100px;
+    }
+
+    &__copied {
+        opacity: 0;
+        visibility: hidden;
+        background: #0abaff;
+        border-radius: 7px;
+        padding: 3px 5px;
     }
 
     &__box-ctrl {

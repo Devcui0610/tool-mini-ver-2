@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (notiElement.style.display === "none" || !notiElement.style.display) {
-            notiElement.style.display = "block";
+            notiElement.style.display = "flex";
         } else {
             notiElement.style.display = "none";
         }
@@ -301,4 +301,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Tải URL đã lưu khi trang load
     loadUrls();
+});
+
+document.getElementById("copy-comparison").addEventListener("click", function () {
+    // Lấy phần tử ul
+    const comparisonList = document.getElementById("comparison-list");
+    const notiCopied = document.querySelector(".card-window__copied");
+
+    if (comparisonList) {
+        // Lấy text từ các thẻ <li>
+        const textToCopy = Array.from(comparisonList.querySelectorAll("li"))
+            .map(item => item.textContent.trim()) // Lấy nội dung từng <li>
+            .join("\n"); // Ngăn cách các mục bằng xuống dòng
+
+        // Sao chép vào clipboard
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                notiCopied.style.opacity = "1"
+                notiCopied.style.visibility = "visible"
+
+                setTimeout(() => {
+                    notiCopied.style.opacity = "0"
+                    notiCopied.style.visibility = "hidden"
+                }, 1000);
+            })
+            .catch(err => {
+                console.error("Lỗi khi sao chép nội dung:", err);
+                alert("Có lỗi xảy ra khi sao chép.");
+            });
+    } else {
+        alert("Không có danh sách để sao chép.");
+    }
 });

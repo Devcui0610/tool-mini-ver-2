@@ -2277,6 +2277,7 @@ html.dark .icon {
 }
 .report__output-text {
   margin-top: 20px;
+  outline: none;
 }
 
 .tab-page {
@@ -2491,6 +2492,7 @@ html.dark .icon {
   border-radius: 10px;
 }
 .card-window__noti {
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 0;
@@ -2501,6 +2503,8 @@ html.dark .icon {
   color: #000;
   z-index: 2;
   display: none;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 .card-window__noti-list {
   display: flex;
@@ -2511,6 +2515,16 @@ html.dark .icon {
   border-right: 1px solid var(--color-primary);
   padding-right: 20px;
   margin-right: 20px;
+}
+.card-window__copy-btn {
+  margin-left: 100px;
+}
+.card-window__copied {
+  opacity: 0;
+  visibility: hidden;
+  background: #0abaff;
+  border-radius: 7px;
+  padding: 3px 5px;
 }
 .card-window__box-ctrl {
   position: absolute;
